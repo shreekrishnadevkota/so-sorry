@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Do You Love Me? 🥰</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-1:#FFE5EC;
+    --bg-2:#FFF0F3;
+    --card:#FFFFFF;
+    --ink:#7A3B46;
+    --ink-soft:#B0677A;
+    --rose:#FF6B9D;
+    --rose-deep:#E84E85;
+    --mint:#B7EFC5;
+    --mint-deep:#5FD68B;
+    --gold:#FFD166;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100vh;
+    overflow-x:hidden;
+    overscroll-behavior:none;
+    -webkit-text-size-adjust:100%;
+  }
+
+  body{
+    font-family:'Quicksand', sans-serif;
+    background:
+      radial-gradient(circle at 15% 20%, #ffd6e2 0%, transparent 45%),
+      radial-gradient(circle at 85% 80%, #ffd0dd 0%, transparent 45%),
+      linear-gradient(160deg, var(--bg-1), var(--bg-2));
+    min-height:100vh;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    padding:24px;
+    padding-top:calc(24px + env(safe-area-inset-top));
+    padding-bottom:calc(24px + env(safe-area-inset-bottom));
+    padding-left:calc(24px + env(safe-area-inset-left));
+    padding-right:calc(24px + env(safe-area-inset-right));
+    -webkit-user-select:none;
+    user-select:none;
+    touch-action:manipulation;
+  }
+
+  /* floating background hearts */
+  .hearts{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+  .hearts span{
+    position:absolute;
+    bottom:-10%;
+    font-size:22px;
+    opacity:0.55;
+    animation:floatUp linear infinite;
+    color:var(--rose);
+  }
+  @keyframes floatUp{
+    0%{ transform:translateY(0) rotate(0deg); opacity:0; }
+    10%{ opacity:0.6; }
+    90%{ opacity:0.4; }
+    100%{ transform:translateY(-115vh) rotate(25deg); opacity:0; }
+  }
+
+  .card{
+    position:relative;
+    z-index:2;
+    background:var(--card);
+    border-radius:32px;
+    padding:44px 36px 38px;
+    width:100%;
+    max-width:420px;
+    text-align:center;
+    box-shadow:
+      0 20px 45px -12px rgba(232, 78, 133, 0.35),
+      0 2px 8px rgba(232, 78, 133, 0.15);
+    border:2px solid #ffd7e2;
+    transition:transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .card.celebrating{
+    animation:cardPulse 0.6s ease;
+  }
+  @keyframes cardPulse{
+    0%{ transform:scale(1); }
+    30%{ transform:scale(1.05); }
+    60%{ transform:scale(0.98); }
+    100%{ transform:scale(1); }
+  }
+
+  .character-wrap{
+    width:150px;
+    height:150px;
+    margin:0 auto 18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  #character{
+    width:100%;
+    height:100%;
+    transition:transform 0.35s ease;
+  }
+
+  .character-wrap.bounce #character{
+    animation:bounce 1s ease-in-out infinite;
+  }
+
+  @keyframes bounce{
+    0%, 100%{ transform:translateY(0) rotate(-2deg); }
+    50%{ transform:translateY(-14px) rotate(2deg); }
+  }
+
+  .eye{
+    animation:blink 4.5s ease-in-out infinite;
+    transform-origin:center;
+  }
+  @keyframes blink{
+    0%, 92%, 100%{ transform:scaleY(1); }
+    95%{ transform:scaleY(0.1); }
+  }
+
+  h1{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    color:var(--ink);
+    font-size:clamp(1.35rem, 5vw, 1.7rem);
+    margin:0 0 26px;
+    line-height:1.3;
+    min-height:2.6em;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.25s ease;
+  }
+
+  .buttons{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+    min-height:70px;
+  }
+
+  .btn{
+    font-family:'Baloo 2', sans-serif;
+    border:none;
+    border-radius:999px;
+    cursor:pointer;
+    font-weight:700;
+    letter-spacing:0.3px;
+    transition:all 0.18s ease;
+    box-shadow:0 8px 18px -6px rgba(0,0,0,0.25);
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+
+  .btn:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+
+  .btn.yes{
+    background:linear-gradient(135deg, var(--mint-deep), #3fbf78);
+    color:#fff;
+    font-size:1.05rem;
+    padding:14px 30px;
+  }
+  .btn.yes:hover{
+    filter:brightness(1.05);
+  }
+
+  .btn.no{
+    background:linear-gradient(135deg, #ffb8c9, var(--rose));
+    color:#fff;
+    font-size:1.05rem;
+    padding:14px 30px;
+    z-index:5;
+  }
+
+  .btn.no.roaming{
+    position:fixed;
+    box-shadow:0 10px 24px -8px rgba(232,78,133,0.5);
+  }
+
+  .subtext{
+    margin-top:18px;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    min-height:1.2em;
+    transition:opacity 0.3s ease;
+  }
+
+  /* confetti */
+  .confetti-piece{
+    position:fixed;
+    top:-10px;
+    width:10px;
+    height:14px;
+    opacity:0.9;
+    pointer-events:none;
+    z-index:20;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall{
+    0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(105vh) rotate(540deg); opacity:0.9; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hearts span, .eye, .character-wrap.bounce #character, .confetti-piece{
+      animation:none !important;
+    }
+  }
+
+  @media (max-width:380px){
+    .card{ padding:34px 22px 30px; border-radius:26px; }
+    .character-wrap{ width:120px; height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts" id="heartsField" aria-hidden="true"></div>
+
+<main class="card" id="card">
+  <div class="character-wrap" id="characterWrap">
+    <svg id="character" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="cute panda">
+      <!-- ears -->
+      <circle cx="52" cy="46" r="26" fill="#3a3a3a"/>
+      <circle cx="148" cy="46" r="26" fill="#3a3a3a"/>
+      <!-- face -->
+      <ellipse cx="100" cy="110" rx="78" ry="70" fill="#ffffff" stroke="#e8e8e8" stroke-width="2"/>
+      <!-- eye patches -->
+      <ellipse id="patchL" cx="68" cy="100" rx="26" ry="32" fill="#3a3a3a" transform="rotate(-18 68 100)"/>
+      <ellipse id="patchR" cx="132" cy="100" rx="26" ry="32" fill="#3a3a3a" transform="rotate(18 132 100)"/>
+      <!-- eyes (default) -->
+      <g id="eyesDefault">
+        <circle class="eye" cx="68" cy="104" r="7" fill="#fff"/>
+        <circle class="eye" cx="132" cy="104" r="7" fill="#fff"/>
+        <circle cx="70" cy="106" r="3.2" fill="#3a3a3a"/>
+        <circle cx="134" cy="106" r="3.2" fill="#3a3a3a"/>
+      </g>
+      <!-- heart eyes (celebration, hidden by default) -->
+      <g id="eyesHeart" opacity="0" transform="translate(0,-2)">
+        <path d="M68 100 C63 92, 48 94, 50 105 C51 113, 62 120, 68 126 C74 120, 85 113, 86 105 C88 94, 73 92, 68 100 Z" fill="#FF6B9D"/>
+        <path d="M132 100 C127 92, 112 94, 114 105 C115 113, 126 120, 132 126 C138 120, 149 113, 150 105 C152 94, 137 92, 132 100 Z" fill="#FF6B9D"/>
+      </g>
+      <!-- nose -->
+      <ellipse cx="100" cy="122" rx="9" ry="6.5" fill="#3a3a3a"/>
+      <!-- mouth default (shy smile) -->
+      <path id="mouthDefault" d="M100 128 Q100 138 90 140 M100 128 Q100 138 110 140" stroke="#3a3a3a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- mouth happy (big grin, hidden by default) -->
+      <path id="mouthHappy" d="M78 128 Q100 156 122 128" stroke="#3a3a3a" stroke-width="3" fill="none" stroke-linecap="round" opacity="0"/>
+      <!-- blush -->
+      <ellipse cx="48" cy="128" rx="10" ry="6" fill="#FFB3C6" opacity="0.85"/>
+      <ellipse cx="152" cy="128" rx="10" ry="6" fill="#FFB3C6" opacity="0.85"/>
+    </svg>
+  </div>
+
+  <h1 id="question">please forgive me 🥰</h1>
+
+  <div class="buttons">
+    <button class="btn yes" id="yesBtn" type="button">Yes</button>
+    <button class="btn no" id="noBtn" type="button">No</button>
+  </div>
+
+  <p class="subtext" id="subtext">psst... choose wisely 👀</p>
+</main>
+
+<script>
+(function(){
+  const card = document.getElementById('card');
+  const question = document.getElementById('question');
+  const subtext = document.getElementById('subtext');
+  const yesBtn = document.getElementById('yesBtn');
+  const noBtn = document.getElementById('noBtn');
+  const characterWrap = document.getElementById('characterWrap');
+  const eyesDefault = document.getElementById('eyesDefault');
+  const eyesHeart = document.getElementById('eyesHeart');
+  const mouthDefault = document.getElementById('mouthDefault');
+  const mouthHappy = document.getElementById('mouthHappy');
+  const patchL = document.getElementById('patchL');
+  const patchR = document.getElementById('patchR');
+  const heartsField = document.getElementById('heartsField');
+
+  const messages = [
+    "Please think again! 🥺",
+    "Ek aur baar soch lo! 💔",
+    "Are you absolutely sure?",
+    "You're breaking my heart...",
+    "Nooo don't do this 😢",
+    "I'll cry, I swear 😭",
+    "Just say yes na please 🙏",
+    "My heart genuinely can't take this 💔",
+    "Okay fine, last chance... 🥺👉👈",
+    "The button ran away for a reason 😅"
+  ];
+
+  const subtexts = [
+    "the 'No' button is shy today 🙈",
+    "it's getting harder to click, isn't it? 😌",
+    "why chase it, just say yes 💕",
+    "your finger's getting a workout 😆",
+    "some things just aren't meant to be clicked"
+  ];
+
+  let noCount = 0;
+  const YES_MAX_SCALE = 2.4;
+  const NO_MIN_SCALE = 0.35;
+
+  function initFloatingHearts(){
+    const symbols = ['💗','💖','💕','💓'];
+    for(let i=0;i<14;i++){
+      const s = document.createElement('span');
+      s.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      s.style.left = Math.random()*100 + '%';
+      s.style.fontSize = (14 + Math.random()*18) + 'px';
+      s.style.animationDuration = (8 + Math.random()*10) + 's';
+      s.style.animationDelay = (Math.random()*10) + 's';
+      heartsField.appendChild(s);
+    }
+  }
+
+  function escapeNoButton(){
+    if(noCount >= messages.length + 6) return; // already fully escaped, stop re-triggering endlessly on stray hovers
+    noCount++;
+
+    // update heading text
+    const msgIndex = Math.min(noCount - 1, messages.length - 1);
+    question.textContent = messages[msgIndex];
+
+    // update subtext occasionally
+    if(noCount % 2 === 0){
+      subtext.textContent = subtexts[Math.min(Math.floor(noCount/2)-1, subtexts.length-1)];
+    }
+
+    // shrink the No button (real size, not just transform, so hit-area actually shrinks)
+    const shrinkFactor = Math.max(NO_MIN_SCALE, 1 - noCount * 0.09);
+    const fontSize = Math.max(0.55, 1.05 * shrinkFactor);
+    const padY = Math.max(5, 14 * shrinkFactor);
+    const padX = Math.max(9, 30 * shrinkFactor);
+    noBtn.style.fontSize = fontSize + 'rem';
+    noBtn.style.padding = padY + 'px ' + padX + 'px';
+    noBtn.style.opacity = Math.max(0.55, shrinkFactor);
+
+    // grow the Yes button
+    const growFactor = Math.min(YES_MAX_SCALE, 1 + noCount * 0.14);
+    yesBtn.style.transform = 'scale(' + growFactor + ')';
+    yesBtn.style.margin = (growFactor > 1.3 ? '10px 14px' : '0');
+
+    // teleport the No button to a random spot once it has shrunk a bit
+    if(noCount >= 2){
+      noBtn.classList.add('roaming');
+      const vv = window.visualViewport;
+      const viewportW = vv ? vv.width : window.innerWidth;
+      const viewportH = vv ? vv.height : window.innerHeight;
+      const btnRect = noBtn.getBoundingClientRect();
+      const margin = 24;
+      const maxLeft = Math.max(margin, viewportW - btnRect.width - margin);
+      const maxTop = Math.max(margin, viewportH - btnRect.height - margin);
+      const randLeft = margin + Math.random() * (maxLeft - margin);
+      const randTop = margin + Math.random() * (maxTop - margin);
+      noBtn.style.left = randLeft + 'px';
+      noBtn.style.top = randTop + 'px';
+    }
+  }
+
+  let lastTrigger = 0;
+  function triggerOnce(){
+    const now = Date.now();
+    if(now - lastTrigger < 350) return; // guard against touchstart + click double-fire on mobile
+    lastTrigger = now;
+    escapeNoButton();
+  }
+
+  noBtn.addEventListener('mouseenter', triggerOnce);
+  noBtn.addEventListener('touchstart', function(e){ e.preventDefault(); triggerOnce(); }, {passive:false});
+  noBtn.addEventListener('click', function(e){ e.preventDefault(); triggerOnce(); });
+
+  function launchConfetti(){
+    const colors = ['#FF6B9D','#FFD166','#5FD68B','#6EC1FF','#C792FF','#FF9F1C'];
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+    const count = 120;
+    for(let i=0;i<count;i++){
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random()*100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration = (2.2 + Math.random()*1.8) + 's';
+      piece.style.animationDelay = (Math.random()*0.6) + 's';
+      piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      container.appendChild(piece);
+    }
+    setTimeout(()=> container.remove(), 4500);
+  }
+
+  yesBtn.addEventListener('click', function(){
+    // reset button styles
+    noBtn.classList.remove('roaming');
+    noBtn.style.left = '';
+    noBtn.style.top = '';
+    yesBtn.style.transform = 'scale(1)';
+    yesBtn.style.margin = '0';
+    noBtn.remove ? null : null;
+
+    // swap to celebration mode
+    question.textContent = "Hehe, I knew it! Love you a lot! 💖";
+    subtext.textContent = "best decision you've made all day 😌💕";
+    noBtn.style.display = 'none';
+
+    eyesDefault.style.opacity = '0';
+    eyesHeart.style.opacity = '1';
+    mouthDefault.style.opacity = '0';
+    mouthHappy.style.opacity = '1';
+    patchL.setAttribute('fill', '#3a3a3a');
+    patchR.setAttribute('fill', '#3a3a3a');
+
+    characterWrap.classList.add('bounce');
+    card.classList.add('celebrating');
+
+    launchConfetti();
+    setTimeout(launchConfetti, 700);
+  });
+
+  initFloatingHearts();
+})();
+</script>
+
+</body>
+</html>
